@@ -4,5 +4,6 @@ echo -n Password:
 read -s password
 echo
 
+echo "Signing in As $userName"
 phantomjs login.js $userName $password
 
