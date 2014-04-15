@@ -18,7 +18,7 @@ var eventFire = function (el, etype) {
 };
 
 exports.performOperationOnPrompt = function(msg){
-	system.stdout.writeLine(msg);
+    system.stdout.writeLine(msg);
     var line = system.stdin.readLine();
     return line;
 }
@@ -38,20 +38,19 @@ exports.performOperationOnConsoleMessage = function (msg) {
         renderPageTo('afterCodeFilled');
     }
 
-    var showConsoleMessage = function(msg){
-        console.log(msg);
+    var showConsoleMessage = function(){
+        console.log('Message on Browser\'s console:-- '+msg);
     }
 
-    if(['login','verify','code filled'].indexOf(msg)>-1){
-        operations[msg]();
-        return;
-    }
-    showConsoleMessage('Message on Browser\'s console:-- '+msg);
+    operations[msg] && operations[msg]();
+    operations[msg] || showConsoleMessage();
 };
 
 exports.performOperationOnPageLoaded = function(args){
     return function () {
-        if (page.title == 'ThoughtWorks - Sign In'){
+        var actions = {};
+
+        actions['ThoughtWorks - Sign In'] = function(){
             if(!firstTimeSignIn)
                 return;
             console.log('opening login page');
@@ -59,19 +58,19 @@ exports.performOperationOnPageLoaded = function(args){
             page.evaluate(evaluator.onLoginPage, args);
         }
 
-        if(page.title == 'ThoughtWorks - Extra Verification'){
+        actions['ThoughtWorks - Extra Verification'] = function(){
             renderPageTo('verify');
             console.log('loaded Verification page');
             page.evaluate(evaluator.onVerificationPage, eventFire);
-            return;
         }
 
-        console.log(page.title);
-        if(page.title == 'salesforce.com - Unlimited Edition'){
+        actions['salesforce.com - Unlimited Edition'] = function(){
             renderPageTo('ourThoughtworksHome');
             console.log('Loading Our ThoughtWorks Page');
             phantom.exit();
         }
-    
+
+        actions[page.title] && actions[page.title]();
+        actions[page.title] || console.log(page.title);
     }
 };
