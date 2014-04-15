@@ -10,6 +10,8 @@ page.onConsoleMessage = scripts.performOperationOnConsoleMessage;
 
 page.onPrompt = scripts.performOperationOnPrompt;
 
+page.onError = scripts.performOperationOnError;
+
 
 var url = 'http://our.thoughtworks.com/';
 page.open(url);
