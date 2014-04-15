@@ -24,25 +24,29 @@ exports.performOperationOnPrompt = function(msg){
 }
 
 exports.performOperationOnConsoleMessage = function (msg) {
-    switch (msg) {
-        case 'login':
-            renderPageTo('filledLoginForm');
-            break;
-
-        case 'verify':
-            console.log('Verification code sent on your mobile');
-           	renderPageTo('afterCodeSent');
-            break;
-
-        case 'code filled':
-        	renderPageTo('afterCodeFilled');
-        	break;
-
-        case 'our':
-        	console.log('after clicking on ourThoughtworks Link');
-        	renderPageTo('after');
-        	break;
+    var operations = {};
+    operations['login'] = function(){
+        renderPageTo('filledLoginForm');
     };
+
+    operations['verify'] = function(){
+        console.log('Verification code sent on your mobile');
+        renderPageTo('afterCodeSent');
+    };
+
+    operations['code filled'] = function(){
+        renderPageTo('afterCodeFilled');
+    }
+
+    var showConsoleMessage = function(msg){
+        console.log(msg);
+    }
+
+    if(['login','verify','code filled'].indexOf(msg)>-1){
+        operations[msg]();
+        return;
+    }
+    showConsoleMessage('Message on Browser\'s console:-- '+msg);
 };
 
 exports.performOperationOnPageLoaded = function(args){

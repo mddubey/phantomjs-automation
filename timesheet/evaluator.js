@@ -9,7 +9,6 @@ exports.onLoginPage = function (args) {
 exports.onVerificationPage = function (eventFireFn) {
     var promptForCode = function(){
         console.log('verify');
-
         var verificationCode = prompt('Enter verification code sent on your mobile:--');
         document.getElementById('smsFactorAttempt.code').value = verificationCode;
         console.log('code filled');
