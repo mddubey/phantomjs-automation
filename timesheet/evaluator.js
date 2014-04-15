@@ -16,15 +16,8 @@ exports.onVerificationPage = function (eventFireFn) {
         document.getElementById('verify_factor').click();    
     };
 
-    if (document.title == 'ThoughtWorks - Sign In')
-        return;
     var sendSMSLink = document.getElementById('send-sms');
     eventFireFn(sendSMSLink, 'click');
 
     setTimeout(promptForCode, 5000);
-};
-
-exports.onApplicationsPage = function(eventFireFn){
-    var ourThoughtWorksLink = document.getElementById('0oag3qwdj7CTZRQVGUKO_mc');
-    return ourThoughtWorksLink.href;
 };

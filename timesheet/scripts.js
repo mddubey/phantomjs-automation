@@ -1,4 +1,5 @@
 var count = 1;
+var firstTimeSignIn = true;
 var system = require('system');
 var evaluator = require('./evaluator');
 
@@ -22,14 +23,6 @@ exports.performOperationOnPrompt = function(msg){
     return line;
 }
 
-exports.performOperationOnPageOpen = function (args) {
-    return function () {
-	    console.log('opening login page');
-	    renderPageTo('login');
-	    page.evaluate(evaluator.onLoginPage, args);
-	};
-};
-
 exports.performOperationOnConsoleMessage = function (msg) {
     switch (msg) {
         case 'login':
@@ -52,27 +45,29 @@ exports.performOperationOnConsoleMessage = function (msg) {
     };
 };
 
-exports.performOperationOnPageLoaded = function () {
-    if (page.title == 'ThoughtWorks - Sign In')
-        return;
-    if(page.title == 'ThoughtWorks - Extra Verification'){
-	    renderPageTo('verify');
-	    console.log('loaded Verification page');
-	    page.evaluate(evaluator.onVerificationPage, eventFire);
-	    return;
-    }
-    if(page.title == 'ThoughtWorks - My Applications'){
-    	renderPageTo('myApplications');
-    	console.log('loaded TW applications page');
-    	var ourThoughtworksHomeUrl = page.evaluate(evaluator.onApplicationsPage, eventFire);
-    	page.open(ourThoughtworksHomeUrl);
-    	return;
-    }
-    console.log(page.title);
-    if(page.title == 'salesforce.com - Unlimited Edition'){
-    	renderPageTo('ourThoughtworksHome');
-    	console.log('Loading Our ThoughtWorks Page');
-    	phantom.exit();
-    }
+exports.performOperationOnPageLoaded = function(args){
+    return function () {
+        if (page.title == 'ThoughtWorks - Sign In'){
+            if(!firstTimeSignIn)
+                return;
+            console.log('opening login page');
+            renderPageTo('login');
+            page.evaluate(evaluator.onLoginPage, args);
+        }
+
+        if(page.title == 'ThoughtWorks - Extra Verification'){
+            renderPageTo('verify');
+            console.log('loaded Verification page');
+            page.evaluate(evaluator.onVerificationPage, eventFire);
+            return;
+        }
+
+        console.log(page.title);
+        if(page.title == 'salesforce.com - Unlimited Edition'){
+            renderPageTo('ourThoughtworksHome');
+            console.log('Loading Our ThoughtWorks Page');
+            phantom.exit();
+        }
     
+    }
 };

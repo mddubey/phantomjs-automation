@@ -4,12 +4,12 @@ var scripts = require('./scripts');
 
 var args = system.args;
 
-page.onLoadFinished = scripts.performOperationOnPageLoaded;
+page.onLoadFinished = scripts.performOperationOnPageLoaded(args);
 
 page.onConsoleMessage = scripts.performOperationOnConsoleMessage;
 
 page.onPrompt = scripts.performOperationOnPrompt;
 
 
-var url = 'http://thoughtworks.okta.com';
-page.open(url, scripts.performOperationOnPageOpen(args));
+var url = 'http://our.thoughtworks.com/';
+page.open(url);

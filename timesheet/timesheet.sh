@@ -5,5 +5,5 @@ read -s password
 echo
 
 echo "Signing in As $userName"
-phantomjs login.js $userName $password
+phantomjs timesheet.js $userName $password
 
