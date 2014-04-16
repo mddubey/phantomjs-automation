@@ -24,5 +24,12 @@ exports.onVerificationPage = function (eventFireFn, getDocumentDetails) {
 };
 
 exports.onOurThoughtworksHomePage = function(eventFireFn, getDocumentDetails){
+    var timeCardLink = document.getElementsByTagName('a')[10];
+    eventFireFn(timeCardLink,'click');
     return getDocumentDetails(document);
 }
+
+exports.onTimeCardsPage = function(getDocumentDetails){
+    return getDocumentDetails(document);
+}
+

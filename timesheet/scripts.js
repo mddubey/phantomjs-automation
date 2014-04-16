@@ -48,6 +48,7 @@ var storePageURL = function(pageDetails){
 var storePageContent = function(pageDetails){
     var path = './pages/COUNT_FILENAME.html';
     path = path.replace('FILENAME',pageDetails.title).replace('COUNT',pageCount++);
+    path = path.replace(':','-');
     fs.write(path,pageDetails.content,'w');
 }
 
@@ -131,10 +132,17 @@ exports.performOperationOnPageLoaded = function(args){
             console.log('Loading Our ThoughtWorks Page');
             var pageDetails = page.evaluate(evaluator.onOurThoughtworksHomePage, eventFire, getDocumentDetails);
             storePageDetails(pageDetails);
-            phantom.exit();
         };
 
+        actions['Timecards: Home ~ salesforce.com - Unlimited Edition'] = function(){
+            renderPageAsInfo('timecards');
+            console.log('loading Timecards Page');
+            var pageDetails = page.evaluate(evaluator.onTimeCardsPage, getDocumentDetails);
+            storePageDetails(pageDetails);
+            phantom.exit();
+        }
+
         actions[page.title] && actions[page.title]();
-        actions[page.title] || console.log('title',page.title);
+        actions[page.title] || console.log('title:-- ',page.title);
     }
 };
