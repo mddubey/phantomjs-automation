@@ -6,12 +6,12 @@ var firstTimeSignIn = true;
 var system = require('system');
 var evaluator = require('./evaluator');
 
-// function setup(){
-//     fs.write('./logs/url.json','','w');
-//     fs.write('./logs/log','','w');
-// }
+function setup(){
+    fs.write('./logs/url.json','','w');
+    fs.write('./logs/pages.log','','w');
+}
 
-// setup();
+setup();
 var getDocumentDetails = function(document){
     var details = {};
     details.title = document.title;
@@ -36,19 +36,24 @@ function getTime () {
     return new Date().toString().split(" ")[4]; //current system time
 }
 
-// var storeURL = function(pageDetails){
-//     var log = 'Page TITLE with url PAGEURL opened at TIME';
-//     log = log.replace('TITLE', pageDetails.title).replace('PAGEURL', pageDetails.url).replace('TIME', getTime());
-//     var url = {pageDetails.title:pageDetails.url};
-//     fs.write('./logs/url.json',JSON.stringify(url),'a');
-//     fs.write('./logs/log',log,'a');
-//     console.log('likha');
-// }
+var storePageURL = function(pageDetails){
+    var log = 'Page {{TITLE}} opened with url {{PAGEURL}} at {{TIME}}\n';
+    log = log.replace('TITLE', pageDetails.title).replace('PAGEURL', pageDetails.url).replace('TIME', getTime());
+    var url = {};
+    url[pageDetails.title] = pageDetails.url;
+    fs.write('./logs/url.json',JSON.stringify(url)+'\n','a');
+    fs.write('./logs/pages.log',log,'a');
+}
 
 var storePageContent = function(pageDetails){
     var path = './pages/COUNT_FILENAME.html';
     path = path.replace('FILENAME',pageDetails.title).replace('COUNT',pageCount++);
     fs.write(path,pageDetails.content,'w');
+}
+
+var storePageDetails = function(pageDetails){
+    storePageContent(pageDetails);
+    storePageURL(pageDetails);
 }
 
 var eventFire = function (el, etype) {
@@ -102,7 +107,6 @@ exports.performOperationOnConsoleMessage = function (msg) {
 };
 
 exports.performOperationOnPageLoaded = function(args){
-    console.log('mai yaha')
     return function () {
         var actions = {};
 
@@ -112,22 +116,21 @@ exports.performOperationOnPageLoaded = function(args){
             console.log('opening login page');
             renderPageAsInfo('login');
             var pageDetails = page.evaluate(evaluator.onLoginPage, args, getDocumentDetails);
-            storePageContent(pageDetails);
-            // storePageUrl(pageDetails);
+            storePageDetails(pageDetails);
         };
 
         actions['ThoughtWorks - Extra Verification'] = function(){
             renderPageAsInfo('verify');
             console.log('loaded Verification page');
             var pageDetails = page.evaluate(evaluator.onVerificationPage, eventFire, getDocumentDetails);
-            storePageContent(pageDetails);
+            storePageDetails(pageDetails);
         };
 
         actions['salesforce.com - Unlimited Edition'] = function(){
             renderPageAsInfo('ourThoughtworksHome');
             console.log('Loading Our ThoughtWorks Page');
             var pageDetails = page.evaluate(evaluator.onOurThoughtworksHomePage, eventFire, getDocumentDetails);
-            storePageContent(pageDetails);
+            storePageDetails(pageDetails);
             phantom.exit();
         };
 

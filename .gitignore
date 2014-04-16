@@ -1,4 +1,6 @@
 .idea
 *.png
 *.html
+*.log
+*.json
 ll.sh
