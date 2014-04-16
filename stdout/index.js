@@ -3,7 +3,7 @@ var system = require('system');
 var count = 1;
 
 function renderPageTo(page, name) {
-    page.render('./screens/' + count++ + '_' + name + '.jpeg');
+    page.render('./screens/' + count++ + '_' + name + '.png');
 }
 
 page.onConsoleMessage=function(){
