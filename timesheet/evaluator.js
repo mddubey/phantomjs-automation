@@ -1,6 +1,6 @@
 exports.onLoginPage = function (args, getDocumentDetails) {
-    document.getElementById('user-signin').value = args[1];
-    document.getElementById('pass-signin').value = args[2];
+    document.getElementById('user-signin').value = args[0];
+    document.getElementById('pass-signin').value = args[1];
     document.getElementById('remember').checked = true;
     document.getElementById('credentials').submit();
     console.log('login');
