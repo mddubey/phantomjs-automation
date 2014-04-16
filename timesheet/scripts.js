@@ -144,7 +144,8 @@ exports.performOperationOnPageLoaded = function(args){
         actions['Timecard Entry ~ salesforce.com - Unlimited Edition'] = function(){
             renderPageAsInfo('timecardsEntry');
             console.log('loading Timecard Entry Page');
-            var pageDetails = page.evaluate(evaluator.onTimeCardsEntryPage, getDocumentDetails);
+            var pageDetails = page.evaluate(evaluator.onTimeCardsEntryPage, args[2], getDocumentDetails);
+            renderPageAsInfo('filledTimeSheets');
             storePageDetails(pageDetails);
             phantom.exit();
         }

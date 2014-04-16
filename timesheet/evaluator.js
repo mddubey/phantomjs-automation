@@ -34,7 +34,17 @@ exports.onTimeCardsHomePage = function(getDocumentDetails){
     return getDocumentDetails(document);
 }
 
-exports.onTimeCardsEntryPage = function(getDocumentDetails){
+exports.onTimeCardsEntryPage = function(args,getDocumentDetails){
+    var project = document.getElementById('tcPage:tcForm:tcBlock:tcPbs:j_id74:0:assignmentnamePanel');
+    var subProject = document.getElementsByTagName('select')[0];
+    var location = document.getElementById('tcPage:tcForm:tcBlock:tcPbs:j_id74:0:phase');
+    var timeFields = document.getElementsByClassName('hrInputText fakeSelectorClassForHrInput');
+
+    project.textContent = 'People Support & Development';
+    subProject.value = 'a0y50000000qjFZAAY';
+    location.value = 'India';
+    for(i=0;i<7;i++){
+        timeFields[i].value = args[i];
+    }
     return getDocumentDetails(document);
 }
-
