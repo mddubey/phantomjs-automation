@@ -135,9 +135,16 @@ exports.performOperationOnPageLoaded = function(args){
         };
 
         actions['Timecards: Home ~ salesforce.com - Unlimited Edition'] = function(){
-            renderPageAsInfo('timecards');
-            console.log('loading Timecards Page');
-            var pageDetails = page.evaluate(evaluator.onTimeCardsPage, getDocumentDetails);
+            renderPageAsInfo('timecardsHome');
+            console.log('loading Timecards Home Page');
+            var pageDetails = page.evaluate(evaluator.onTimeCardsHomePage, getDocumentDetails);
+            storePageDetails(pageDetails);
+        }
+
+        actions['Timecard Entry ~ salesforce.com - Unlimited Edition'] = function(){
+            renderPageAsInfo('timecardsEntry');
+            console.log('loading Timecard Entry Page');
+            var pageDetails = page.evaluate(evaluator.onTimeCardsEntryPage, getDocumentDetails);
             storePageDetails(pageDetails);
             phantom.exit();
         }

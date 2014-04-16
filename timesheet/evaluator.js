@@ -29,7 +29,12 @@ exports.onOurThoughtworksHomePage = function(eventFireFn, getDocumentDetails){
     return getDocumentDetails(document);
 }
 
-exports.onTimeCardsPage = function(getDocumentDetails){
+exports.onTimeCardsHomePage = function(getDocumentDetails){
+    document.getElementsByClassName('btn')[1].click();
+    return getDocumentDetails(document);
+}
+
+exports.onTimeCardsEntryPage = function(getDocumentDetails){
     return getDocumentDetails(document);
 }
 
