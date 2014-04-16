@@ -12,6 +12,8 @@ page.onPrompt = scripts.performOperationOnPrompt;
 
 page.onError = scripts.performOperationOnError;
 
+page.onAlert = scripts.performOperationOnAlert;
+
 
 var url = 'http://our.thoughtworks.com/';
 page.open(url);
