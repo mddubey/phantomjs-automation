@@ -52,7 +52,9 @@ exports.onTimeCardsEntryPage = function(args, getDocumentDetails, eventFireFn){
         console.log('copied');
         var timeFields = document.getElementsByClassName('hrInputText fakeSelectorClassForHrInput');
         for(i=0;i<7;i++){
+            timeFields[i].focus();
             timeFields[i].value = args[i];
+            timeFields[i].blur();
         };
         console.log('filledSheets');
     },5000);
