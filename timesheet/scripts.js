@@ -32,8 +32,6 @@ function renderPageAsError(name){
     page.render(imageName);
 }
 
-// var renderDivAsInfo(name,)
-
 function getTime () {
     return new Date().toString().split(" ")[4]; //current system time
 }
@@ -74,7 +72,7 @@ exports.performOperationOnError = function(error){
     renderPageAsError('error');
 };
 
-exports.performOperationOnError = function(msg){
+exports.performOperationOnAlert = function(msg){
     console.log('Alert on page '+msg);
 };
 
@@ -107,6 +105,10 @@ exports.performOperationOnConsoleMessage = function (msg) {
 
     operations['copied'] = function(){
         renderPageAsInfo('copiedFromPrevWeek');
+    };
+
+    operations['filledSheets'] = function(){
+        renderPageAsInfo('filledTimeSheets');
         phantom.exit();
     };
 
@@ -156,7 +158,6 @@ exports.performOperationOnPageLoaded = function(args){
             renderPageAsInfo('timecardsEntry');
             console.log('loading Timecard Entry Page');
             var pageDetails = page.evaluate(evaluator.onTimeCardsEntryPage, args[2], getDocumentDetails, eventFire);
-            // renderPageAsInfo('filledTimeSheets');
             storePageDetails(pageDetails);
         }
 
