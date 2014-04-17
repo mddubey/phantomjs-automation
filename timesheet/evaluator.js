@@ -34,17 +34,33 @@ exports.onTimeCardsHomePage = function(getDocumentDetails){
     return getDocumentDetails(document);
 }
 
-exports.onTimeCardsEntryPage = function(args,getDocumentDetails){
-    var project = document.getElementById('tcPage:tcForm:tcBlock:tcPbs:j_id74:0:assignmentnamePanel');
+exports.onTimeCardsEntryPage = function(args, getDocumentDetails, eventFireFn){
+    var copyFromPreviousWeekButNotHours = function(){
+        document.getElementById('CFPWButton').click();
+        console.log('CFPW');
+        document.getElementById('tcPage:tcForm:copyPrevWeekOverlayPageBlock:configCopyHoursFromPrevWeek').checked = false;
+        document.getElementById('tcPage:tcForm:copyPrevWeekOverlayPageBlock:prevWeekTravelInfo').checked = false;
+        document.getElementById('tcPage:tcForm:copyPrevWeekOverlayPageBlock:configCopyLocationsFromPrevWeek').checked = false;
+        document.getElementById('tcPage:tcForm:copyPrevWeekOverlayPageBlock:configCopyNotesFromPrevWeek').checked = false;
+        document.getElementById('tcPage:tcForm:copyPrevWeekOverlayPageBlock:configCopyETCFromPrevWeek').checked = true;
+        document.getElementById('tcPage:tcForm:copyPrevWeekOverlayPageBlock:configCopyMilestoneFromPrevWeek').checked = true;
+        document.getElementById('tcPage:tcForm:copyPrevWeekOverlayPageBlock:configCopyPhaseFromPrevWeek').checked = true;
+        document.getElementById('CFSOverlay_CFSButton').click();
+    };
+    copyFromPreviousWeekButNotHours();
+    setTimeout(function(){
+        console.log('copied');
+
+    },5000);
     var subProject = document.getElementsByTagName('select')[0];
     var location = document.getElementById('tcPage:tcForm:tcBlock:tcPbs:j_id74:0:phase');
     var timeFields = document.getElementsByClassName('hrInputText fakeSelectorClassForHrInput');
 
-    project.textContent = 'People Support & Development';
-    subProject.value = 'a0y50000000qjFZAAY';
-    location.value = 'India';
-    for(i=0;i<7;i++){
-        timeFields[i].value = args[i];
-    }
+    // project.textContent = 'People Support & Development';
+    // subProject.value = 'a0y50000000qjFZAAY';
+    // location.value = 'India';
+    // for(i=0;i<7;i++){
+    //     timeFields[i].value = args[i];
+    // }
     return getDocumentDetails(document);
 }

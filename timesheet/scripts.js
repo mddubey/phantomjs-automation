@@ -32,6 +32,8 @@ function renderPageAsError(name){
     page.render(imageName);
 }
 
+// var renderDivAsInfo(name,)
+
 function getTime () {
     return new Date().toString().split(" ")[4]; //current system time
 }
@@ -99,6 +101,15 @@ exports.performOperationOnConsoleMessage = function (msg) {
         renderPageAsInfo('afterCodeFilled');
     };
 
+    operations['CFPW'] = function(){
+        renderPageAsInfo('proceedToCopyFromPreviousWeek');
+    };
+
+    operations['copied'] = function(){
+        renderPageAsInfo('copiedFromPrevWeek');
+        phantom.exit();
+    };
+
     var showConsoleMessage = function(){
         console.log('Message on Browser\'s console:-- '+msg);
     };
@@ -144,10 +155,9 @@ exports.performOperationOnPageLoaded = function(args){
         actions['Timecard Entry ~ salesforce.com - Unlimited Edition'] = function(){
             renderPageAsInfo('timecardsEntry');
             console.log('loading Timecard Entry Page');
-            var pageDetails = page.evaluate(evaluator.onTimeCardsEntryPage, args[2], getDocumentDetails);
-            renderPageAsInfo('filledTimeSheets');
+            var pageDetails = page.evaluate(evaluator.onTimeCardsEntryPage, args[2], getDocumentDetails, eventFire);
+            // renderPageAsInfo('filledTimeSheets');
             storePageDetails(pageDetails);
-            phantom.exit();
         }
 
         actions[page.title] && actions[page.title]();
