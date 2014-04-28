@@ -48,6 +48,7 @@ exports.onTimeCardsEntryPage = function(args, getDocumentDetails, eventFireFn){
         document.getElementById('CFSOverlay_CFSButton').click();
     };
     copyFromPreviousWeekButNotHours();
+
     setTimeout(function(){
         console.log('copied');
         var timeFields = document.getElementsByClassName('hrInputText fakeSelectorClassForHrInput');
@@ -57,6 +58,10 @@ exports.onTimeCardsEntryPage = function(args, getDocumentDetails, eventFireFn){
             timeFields[i].blur();
         };
         console.log('filledSheets');
+        document.getElementById('submitTCButton').click();
+        setTimeout(function(){
+            console.log('submitted');
+        },7000);
     },5000);
     return getDocumentDetails(document);
 }

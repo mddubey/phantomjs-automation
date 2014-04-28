@@ -67,6 +67,14 @@ var eventFire = function (el, etype) {
     el.dispatchEvent(evObj);
 };
 
+exports.performOperationOnConfirm = function(msg){
+    if(msg == 'Submit timecards for approval? You will not be able to make changes once they are submitted.'){
+        console.log('confirm on page:--',msg);
+        renderPageAsInfo('clickedSubmit');
+        return true;
+    }
+};
+
 exports.performOperationOnError = function(error){
     console.log('Error occured '+error);
     renderPageAsError('error');
@@ -82,6 +90,7 @@ exports.performOperationOnPrompt = function(msg){
         var line = system.stdin.readLine();
         return line;
     }
+    console.log('prompt on browser',msg);
 };
 
 exports.performOperationOnConsoleMessage = function (msg) {
@@ -109,6 +118,10 @@ exports.performOperationOnConsoleMessage = function (msg) {
 
     operations['filledSheets'] = function(){
         renderPageAsInfo('filledTimeSheets');
+    };
+
+    operations['submitted'] = function(){
+        renderPageAsInfo('submittedTimeCard');
         phantom.exit();
     };
 

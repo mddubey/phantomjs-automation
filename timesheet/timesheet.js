@@ -32,6 +32,7 @@ page.onError = scripts.performOperationOnError;
 
 page.onAlert = scripts.performOperationOnAlert;
 
+page.onConfirm = scripts.performOperationOnConfirm;
 
 var url = 'http://our.thoughtworks.com/';
 
