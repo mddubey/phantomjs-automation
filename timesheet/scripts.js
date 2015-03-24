@@ -1,7 +1,7 @@
 var firstTimeSignIn = true;
 var system = require('system');
 var evaluator = require('./evaluator');
-var myLib = require('../library/library');
+var myLib = require('../helper/helper');
 
 exports.performOperationOnConfirm = function(msg){
     if(msg == 'Submit timecards for approval? You will not be able to make changes once they are submitted.'){
