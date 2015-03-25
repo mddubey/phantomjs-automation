@@ -1,0 +1,1 @@
+node_modules/phantomjs/bin/phantomjs check-status.js $1

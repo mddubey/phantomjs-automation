@@ -4,5 +4,6 @@
 *.log
 *.json
 ll.sh
+*.DS_Store
 
 **/node_modules
